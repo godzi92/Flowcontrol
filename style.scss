@@ -1,0 +1,96 @@
+@use "color";
+@use "function";
+
+%square {
+  text-decoration: underline color.$blue;
+  color: color.$green;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin col-bord-font($color, $border, $font) {
+  color: $color;
+  border: function.conv(1) solid $border;
+  font-size: $font;
+}
+
+div {
+  border: function.conv(1) solid color.$red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: function.conv(29);
+  gap: function.conv(15);
+
+  h1 {
+    @extend %square;
+  }
+  h2 {
+    @extend %square;
+    border: function.conv(1) solid color.$red;
+    padding: 1rem;
+  }
+  section {
+    display: flex;
+    &:last-child {
+      article {
+        @include col-bord-font(color.$green, color.$blue, function.conv(24));
+      }
+    }
+  }
+  .numeri {
+    $font-sizes: (
+      "1rem": 1rem,
+      "2rem": 2rem,
+      "3rem": 3rem,
+    );
+
+    @each $key, $val in $font-sizes {
+      .fs-#{$key} {
+        font-size: $val;
+      }
+    }
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .fs-1rem,
+    .fs-2rem,
+    .fs-3rem {
+      display: flex;
+      align-items: flex-start;
+      border: function.conv(1) solid color.$red;
+      width: 45px;
+      height: 45px;
+      padding: 0px;
+    }
+    div:nth-child(10) {
+      background-color: blue;
+      color: red;
+    }
+  }
+  article {
+    padding: function.conv(50);
+    &:nth-child(even) {
+      @include col-bord-font(color.$red, color.$green, 1rem);
+    }
+    &:nth-child(odd) {
+      @include col-bord-font(color.$blue, color.$green, 1rem);
+    }
+    p {
+      padding: 0 function.conv(20) 0 function.conv(20);
+      text-align: center;
+    }
+  }
+}
+
+ $base-color: black;
+@for $i from 1 to 19 {
+  .fs-1rem,
+  .fs-2rem,
+  .fs-3rem {
+    background-color: lighten($base-color, $i * 5%);
+  }
+}
