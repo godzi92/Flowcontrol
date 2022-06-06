@@ -65,10 +65,37 @@ div {
       width: 45px;
       height: 45px;
       padding: 0px;
-    }
-    div:nth-child(10) {
-      background-color: blue;
-      color: red;
+      $color-done: (
+        "1": 5,
+        "2": 10,
+        "3": 15,
+        "4": 20,
+        "5": 25,
+        "6": 30,
+        "7": 35,
+        "8": 40,
+        "9": 45,
+        "10": 50,
+        "11": 55,
+        "12": 60,
+        "13": 65,
+        "14": 70,
+        "15": 75,
+        "16": 80,
+        "17": 85,
+        "18": 90,
+        "19": 95,
+      );
+      @each $key, $val in $color-done {
+        &:nth-child(#{$key}) {
+          background-color: darken(white, $val);
+          color: lighten(#000000, $val);
+          @if (#{$key}) == "10" {
+            background-color: blue;
+            color: red;
+          }
+        }
+      }
     }
   }
   article {
@@ -83,14 +110,5 @@ div {
       padding: 0 function.conv(20) 0 function.conv(20);
       text-align: center;
     }
-  }
-}
-
- $base-color: black;
-@for $i from 1 to 19 {
-  .fs-1rem,
-  .fs-2rem,
-  .fs-3rem {
-    background-color: lighten($base-color, $i * 5%);
   }
 }
